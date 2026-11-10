@@ -1,0 +1,21 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+coverage/
+
+# Secrets: never commit these
+.env
+.env.*
+!.env.example
+
+# Uploaded contract documents (confidential)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+*.log
