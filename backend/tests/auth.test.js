@@ -8,7 +8,7 @@ const db = require('./helpers/db');
 
 const payload = { organizationName: 'Acme Ltd', name: 'Asha Rao', email: 'asha@acme.com', password: 'Passw0rdOK' };
 
-beforeAll(db.connect);
+beforeAll(db.connect, 300000); // generous: first run may download a MongoDB binary
 afterEach(db.clear);
 afterAll(db.disconnect);
 
