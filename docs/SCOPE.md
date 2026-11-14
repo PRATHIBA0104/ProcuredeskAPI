@@ -182,7 +182,7 @@ Request pipeline: `helmet` -> `cors` -> rate limiter -> JSON parser -> route -> 
 | F2 Organization tenancy | Implemented, awaiting DB verification | No: every vendor query is scoped by organizationId; isolation tests in `backend/tests/vendors.test.js` need running |
 | M1.1 to M1.5 Auth (register, login, JWT, RBAC, profile, change password) | Complete | Yes: 13 integration tests pass against a real MongoDB 7.0 (run by the developer), plus 17 database-free tests |
 | F3 App shell | Not started | No |
-| M3 Vendors backend (CRUD, categories, contacts, search/filter/sort/pagination, deactivate guard, detail with contracts) | Implemented, awaiting DB verification | Partly: 22 validation/schema tests and 9 route-order tests pass without a database; 32 integration tests in `vendors.test.js` still need running |
+| M3 Vendors backend (CRUD, categories, contacts, search/filter/sort/pagination, deactivate guard, detail with contracts) | Implemented; 30 of 32 integration tests passed on the developer's MongoDB 7.0 | Partly: the 2 failures exposed a Contract index bug (fixed, with a new regression test); the full 33-test file needs one more run |
 | M3 Vendors UI | Not started | No |
 | M4 Contracts | Not started | No |
 | M2.1 to M2.3 Dashboard | Not started | No |

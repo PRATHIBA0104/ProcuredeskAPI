@@ -125,6 +125,14 @@ describe('Mongoose schema validation (no connection needed)', () => {
     expect(ok.currency).toBe('INR');
   });
 
+  test('contract number uniqueness uses a partial index, so number-less contracts never clash', () => {
+    const idx = Contract.schema.indexes().find(([keys]) => keys.contractNumber === 1);
+    expect(idx).toBeTruthy();
+    expect(idx[1].unique).toBe(true);
+    expect(idx[1].sparse).toBeUndefined();
+    expect(idx[1].partialFilterExpression).toEqual({ contractNumber: { $type: 'string' } });
+  });
+
   test('Contract rejects negative money and unknown status', async () => {
     const base = { organizationId: org, vendorId: org, title: 'MSA', startDate: '2026-01-01', endDate: '2026-12-31' };
     await expect(new Contract({ ...base, totalValue: -5 }).validate()).rejects.toThrow();

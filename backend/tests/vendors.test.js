@@ -324,3 +324,19 @@ describe('deactivate / activate', () => {
     expect(await ActivityLog.countDocuments({ entityId: id, action: 'deactivate' })).toBe(1);
   });
 });
+
+describe('contract number uniqueness (index behaviour)', () => {
+  test('many contracts without a number are allowed; duplicate numbers are not; other organizations may reuse a number', async () => {
+    const mine = await Vendor.create({ organizationId: orgA.organizationId, name: 'Slack' });
+    const theirs = await Vendor.create({ organizationId: orgB.organizationId, name: 'Slack' });
+
+    await makeContract(mine, orgA, { title: 'No number 1' });
+    await makeContract(mine, orgA, { title: 'No number 2' });
+    await makeContract(mine, orgA, { title: 'No number 3' });
+
+    await makeContract(mine, orgA, { title: 'Numbered', contractNumber: 'CN-001' });
+    await expect(makeContract(mine, orgA, { title: 'Clash', contractNumber: 'CN-001' })).rejects.toMatchObject({ code: 11000 });
+
+    await expect(makeContract(theirs, orgB, { title: 'Other org', contractNumber: 'CN-001' })).resolves.toBeTruthy();
+  });
+});

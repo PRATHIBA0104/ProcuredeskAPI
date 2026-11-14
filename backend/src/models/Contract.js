@@ -52,7 +52,14 @@ const contractSchema = new mongoose.Schema(
 
 contractSchema.index({ organizationId: 1, vendorId: 1, status: 1 });
 contractSchema.index({ organizationId: 1, endDate: 1 });
-contractSchema.index({ organizationId: 1, contractNumber: 1 }, { unique: true, sparse: true });
+// Contract numbers are optional but unique per organization when present.
+// NOTE: `sparse` is wrong here: in a compound index it still indexes documents that have
+// organizationId but no contractNumber (as null), so a second number-less contract would clash.
+// A partial index only covers documents where contractNumber is really a string.
+contractSchema.index(
+  { organizationId: 1, contractNumber: 1 },
+  { unique: true, partialFilterExpression: { contractNumber: { $type: 'string' } } }
+);
 
 contractSchema.set('toJSON', {
   transform: (doc, ret) => {

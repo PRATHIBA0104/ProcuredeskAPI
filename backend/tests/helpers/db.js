@@ -25,6 +25,9 @@ async function connect() {
       );
     }
     await mongoose.connect(uri, { ...connectOptions, serverSelectionTimeoutMS: 15000 });
+    // Start from a clean slate so indexes left over from an older version of a model
+    // (same name, different options) cannot conflict. Safe: the name was checked above.
+    await mongoose.connection.dropDatabase();
     return;
   }
   const { MongoMemoryServer } = require('mongodb-memory-server');
