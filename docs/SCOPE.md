@@ -179,18 +179,19 @@ Request pipeline: `helmet` -> `cors` -> rate limiter -> JSON parser -> route -> 
 |---|---|---|
 | Scope and effort ledger | Complete | n/a |
 | F1 Monorepo, API conventions, validation, error handling | Complete | Yes: 17 database-free tests pass (validation, 401 paths incl. `alg:none`/expired/wrong-secret tokens, 403 role check, 404, malformed JSON, security headers, NoSQL-operator rejection); server fails fast without secret or database |
-| F2 Organization tenancy | In progress | No: `authenticate` sets `req.organizationId`; scoped queries arrive with Vendors |
-| M1.1 to M1.5 Auth (register, login, JWT, RBAC, profile, change password) | Implemented, awaiting DB verification | No: `backend/tests/auth.test.js` written, needs `npm test` on a machine with internet |
+| F2 Organization tenancy | Implemented, awaiting DB verification | No: every vendor query is scoped by organizationId; isolation tests in `backend/tests/vendors.test.js` need running |
+| M1.1 to M1.5 Auth (register, login, JWT, RBAC, profile, change password) | Complete | Yes: 13 integration tests pass against a real MongoDB 7.0 (run by the developer), plus 17 database-free tests |
 | F3 App shell | Not started | No |
-| M3 Vendors | Not started | No |
+| M3 Vendors backend (CRUD, categories, contacts, search/filter/sort/pagination, deactivate guard, detail with contracts) | Implemented, awaiting DB verification | Partly: 22 validation/schema tests and 9 route-order tests pass without a database; 32 integration tests in `vendors.test.js` still need running |
+| M3 Vendors UI | Not started | No |
 | M4 Contracts | Not started | No |
 | M2.1 to M2.3 Dashboard | Not started | No |
 | F4 Seed + activity log | Model and logger written; seed not started | No |
 
 | Effort ledger | Planned EP | Completed and verified EP |
 |---|---|---|
-| Whole project | 100 | 2 |
-| My individual scope | 45 | 2 (F1 only; Auth's 8 EP will be credited after `npm test` passes on your machine) |
+| Whole project | 100 | 10 |
+| My individual scope | 45 | 10 (F1 = 2, Auth M1.1 to M1.5 = 8) |
 
 ## 9. Remaining 55% (future development scope)
 

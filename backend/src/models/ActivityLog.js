@@ -6,7 +6,7 @@ const activityLogSchema = new mongoose.Schema(
     organizationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization', required: true },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     userName: { type: String, required: true },
-    action: { type: String, required: true, enum: ['create', 'update', 'deactivate', 'upload', 'login', 'register'] },
+    action: { type: String, required: true, enum: ['create', 'update', 'deactivate', 'activate', 'upload', 'login', 'register'] },
     entityType: { type: String, required: true, enum: ['vendor', 'contract', 'document', 'user'] },
     entityId: { type: mongoose.Schema.Types.ObjectId },
     summary: { type: String, required: true, maxlength: 300 },
