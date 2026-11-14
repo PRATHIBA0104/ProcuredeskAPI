@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
+const os = require('os');
 
 let mongod;
+
+// Inside Jest, the MongoDB driver cannot load its "os" module through a dynamic import(),
+// so it silently sends an empty handshake and the server rejects it with
+// "Missing required sub-document 'driver'". Handing it the module avoids that.
+// (Only needed under Jest; the real server in src/ runs in normal Node.)
+const connectOptions = { runtimeAdapters: { os } };
 
 // Two ways to get a database for tests:
 //  1. TEST_MONGODB_URI set  -> use that MongoDB (local install, Docker or Atlas).
@@ -17,12 +24,12 @@ async function connect() {
           '(e.g. .../b2b_procurement_test) because tests delete all data in it.'
       );
     }
-    await mongoose.connect(uri, { serverSelectionTimeoutMS: 15000 });
+    await mongoose.connect(uri, { ...connectOptions, serverSelectionTimeoutMS: 15000 });
     return;
   }
   const { MongoMemoryServer } = require('mongodb-memory-server');
   mongod = await MongoMemoryServer.create();
-  await mongoose.connect(mongod.getUri());
+  await mongoose.connect(mongod.getUri(), connectOptions);
 }
 
 async function clear() {
