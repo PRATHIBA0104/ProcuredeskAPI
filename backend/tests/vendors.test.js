@@ -26,13 +26,15 @@ beforeEach(async () => {
 });
 
 const post = (token, body) => request(app).post('/api/v1/vendors').set(bearer(token)).send(body);
+// Dates are relative to "now" so these tests keep passing as the calendar moves.
+const monthsFromNow = (m) => new Date(Date.now() + m * 30 * 24 * 60 * 60 * 1000);
 const makeContract = (vendor, org, over = {}) =>
   Contract.create({
     organizationId: org.organizationId,
     vendorId: vendor._id,
     title: 'MSA',
-    startDate: '2026-01-01',
-    endDate: '2026-12-31',
+    startDate: monthsFromNow(-1),
+    endDate: monthsFromNow(11),
     totalValue: 1000000,
     annualValue: 1000000,
     status: 'active',

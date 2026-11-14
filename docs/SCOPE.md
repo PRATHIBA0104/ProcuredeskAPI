@@ -179,19 +179,22 @@ Request pipeline: `helmet` -> `cors` -> rate limiter -> JSON parser -> route -> 
 |---|---|---|
 | Scope and effort ledger | Complete | n/a |
 | F1 Monorepo, API conventions, validation, error handling | Complete | Yes: 17 database-free tests pass (validation, 401 paths incl. `alg:none`/expired/wrong-secret tokens, 403 role check, 404, malformed JSON, security headers, NoSQL-operator rejection); server fails fast without secret or database |
-| F2 Organization tenancy | Implemented, awaiting DB verification | No: every vendor query is scoped by organizationId; isolation tests in `backend/tests/vendors.test.js` need running |
+| F2 Organization tenancy | Complete | Yes: isolation tests (read, edit, deactivate, list, search, create-with-foreign-id) pass on a real MongoDB 7.0 |
 | M1.1 to M1.5 Auth (register, login, JWT, RBAC, profile, change password) | Complete | Yes: 13 integration tests pass against a real MongoDB 7.0 (run by the developer), plus 17 database-free tests |
 | F3 App shell | Not started | No |
-| M3 Vendors backend (CRUD, categories, contacts, search/filter/sort/pagination, deactivate guard, detail with contracts) | Implemented; 30 of 32 integration tests passed on the developer's MongoDB 7.0 | Partly: the 2 failures exposed a Contract index bug (fixed, with a new regression test); the full 33-test file needs one more run |
+| M3 Vendors backend (CRUD, categories, contacts, search/filter/sort/pagination, deactivate guard, detail with contracts) | Complete | Yes: all 33 integration tests pass on the developer's MongoDB 7.0, plus 32 database-free tests |
 | M3 Vendors UI | Not started | No |
-| M4 Contracts | Not started | No |
+| M4 Contracts backend (CRUD, document upload/download, dates and values, status lifecycle, computed expiry and notice deadline) | Implemented, awaiting DB verification | Partly: 74 database-free tests pass (status logic, file checks, request rules, model rules, upload/download/delete with real disk writes); 39 integration tests in `contracts.test.js` still need running |
+| M4 Contracts UI | Not started | No |
 | M2.1 to M2.3 Dashboard | Not started | No |
 | F4 Seed + activity log | Model and logger written; seed not started | No |
 
 | Effort ledger | Planned EP | Completed and verified EP |
 |---|---|---|
-| Whole project | 100 | 10 |
-| My individual scope | 45 | 10 (F1 = 2, Auth M1.1 to M1.5 = 8) |
+| Whole project | 100 | 17 |
+| My individual scope | 45 | 17 (F1 = 2, F2 = 2, Auth M1.1 to M1.5 = 8, Vendors backend = 5) |
+
+**Crediting rule:** each feature's points cover model, API, UI and tests. Where a feature has both a backend and a UI, the backend is credited at half its points once its tests pass, and the other half when the UI is built and checked. Vendors (10 points) is therefore credited 5 now.
 
 ## 9. Remaining 55% (future development scope)
 

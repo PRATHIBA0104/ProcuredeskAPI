@@ -1,3 +1,4 @@
+const path = require('path');
 require('dotenv').config({ quiet: true });
 
 // Fail fast: a server running with a missing or weak secret is a security problem,
@@ -9,6 +10,8 @@ function loadEnv() {
     mongoUri: process.env.MONGODB_URI,
     jwtSecret: process.env.JWT_SECRET,
     jwtExpiresIn: process.env.JWT_EXPIRES_IN || '8h',
+    // Where contract documents are stored (outside any public web folder).
+    uploadDir: process.env.UPLOAD_DIR || path.join(__dirname, '..', '..', 'uploads'),
     corsOrigins: (process.env.CORS_ORIGIN || 'http://localhost:3000')
       .split(',')
       .map((o) => o.trim())

@@ -46,7 +46,8 @@ async function list(organizationId, { page, limit, search, category, status, sor
   // Attach each vendor's active-contract count and annual value in ONE query.
   const stats = items.length
     ? await Contract.aggregate([
-        { $match: { organizationId, vendorId: { $in: items.map((v) => v._id) }, status: 'active' } },
+        // "In force" = stored active AND not past its end date (see contractStatus.js)
+        { $match: { organizationId, vendorId: { $in: items.map((v) => v._id) }, status: 'active', endDate: { $gte: new Date() } } },
         { $group: { _id: '$vendorId', activeContracts: { $sum: 1 }, annualValue: { $sum: { $ifNull: ['$annualValue', 0] } } } },
       ])
     : [];
@@ -94,7 +95,12 @@ async function deactivate(user, id) {
   const vendor = await findOwned(user.organizationId, id);
   if (vendor.status === 'inactive') throw new AppError('Vendor is already inactive', 409);
 
-  const activeContracts = await Contract.countDocuments({ organizationId: user.organizationId, vendorId: vendor._id, status: 'active' });
+  const activeContracts = await Contract.countDocuments({
+    organizationId: user.organizationId,
+    vendorId: vendor._id,
+    status: 'active',
+    endDate: { $gte: new Date() }, // a contract past its end date is effectively expired, not in force
+  });
   if (activeContracts > 0) {
     throw new AppError(
       `Cannot deactivate: this vendor still has ${activeContracts} active contract${activeContracts > 1 ? 's' : ''}. Terminate or let them expire first.`,
