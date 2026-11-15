@@ -181,20 +181,20 @@ Request pipeline: `helmet` -> `cors` -> rate limiter -> JSON parser -> route -> 
 | F1 Monorepo, API conventions, validation, error handling | Complete | Yes: 17 database-free tests pass (validation, 401 paths incl. `alg:none`/expired/wrong-secret tokens, 403 role check, 404, malformed JSON, security headers, NoSQL-operator rejection); server fails fast without secret or database |
 | F2 Organization tenancy | Complete | Yes: isolation tests (read, edit, deactivate, list, search, create-with-foreign-id) pass on a real MongoDB 7.0 |
 | M1.1 to M1.5 Auth (register, login, JWT, RBAC, profile, change password) | Complete | Yes: 13 integration tests pass against a real MongoDB 7.0 (run by the developer), plus 17 database-free tests |
-| F3 App shell | Not started | No |
+| F3 App shell (layout, sidebar, top bar, UI kit, toasts, auth context, login, register, profile, route protection, interim dashboard) | Complete | Yes: `next build`, ESLint and `tsc` pass; 15 browser checks (Playwright) pass against a mock API with the real response shapes: redirect when signed out, validation errors, bad login, show/hide password, register field errors, session restore on reload, profile update, password validation, logout, mobile drawer, no console errors. Still to confirm against the real backend on the developer's machine |
 | M3 Vendors backend (CRUD, categories, contacts, search/filter/sort/pagination, deactivate guard, detail with contracts) | Complete | Yes: all 33 integration tests pass on the developer's MongoDB 7.0, plus 32 database-free tests |
-| M3 Vendors UI | Not started | No |
-| M4 Contracts backend (CRUD, document upload/download, dates and values, status lifecycle, computed expiry and notice deadline) | Implemented, awaiting DB verification | Partly: 74 database-free tests pass (status logic, file checks, request rules, model rules, upload/download/delete with real disk writes); 39 integration tests in `contracts.test.js` still need running |
-| M4 Contracts UI | Not started | No |
-| M2.1 to M2.3 Dashboard | Not started | No |
-| F4 Seed + activity log | Model and logger written; seed not started | No |
+| M3 Vendors UI (list, search/filter/sort/paging, create/edit, detail with contracts, deactivate/reactivate dialogs, role-aware controls) | Complete | Yes: build, ESLint, `tsc`; browser tests against a mock API (list, paging, search, filters, empty states, validation, duplicate name, deactivate guard, edit, viewer role). Real-backend confirmation by the developer |
+| M4 Contracts backend (CRUD, document upload/download, dates and values, status lifecycle, computed expiry and notice deadline) | Complete | Yes: full suite passes on the developer's MongoDB 7.0 (all integration tests plus 110 database-free tests) |
+| M4 Contracts UI (list with effective status, create/edit with date rules, detail with notice-deadline banner, activate/terminate, documents upload/download/delete) | Complete | Yes: build, ESLint, `tsc`; browser tests against a mock API (filters, validation, lifecycle, upload with wrong type, download name, remove, no Edit once terminated). Real-backend confirmation by the developer |
+| M2.1 to M2.3 Dashboard (`GET /dashboard/summary` + UI) | Complete | Partly: 12 database-free tests of the numbers pass, UI browser-tested against a mock; the 5 integration tests in `tests/dashboard.test.js` are **awaiting the developer's `npm test`** |
+| F4 Seed + activity log | Complete | Activity log: yes (used by every write, shown on dashboard). `npm run seed` written and syntax-checked; **awaiting the developer's run** |
 
 | Effort ledger | Planned EP | Completed and verified EP |
 |---|---|---|
-| Whole project | 100 | 17 |
-| My individual scope | 45 | 17 (F1 = 2, F2 = 2, Auth M1.1 to M1.5 = 8, Vendors backend = 5) |
+| Whole project | 100 | 45 (39 verified; 6 awaiting the developer's local run: dashboard integration tests 5, seed 1) |
+| My individual scope | 45 | 45 (F1 = 2, F2 = 2, F3 = 3, F4 = 1, Auth = 8, Vendors = 10, Contracts = 14, Dashboard = 5) |
 
-**Crediting rule:** each feature's points cover model, API, UI and tests. Where a feature has both a backend and a UI, the backend is credited at half its points once its tests pass, and the other half when the UI is built and checked. Vendors (10 points) is therefore credited 5 now.
+**Crediting rule:** each feature's points cover model, API, UI and tests. Where a feature has both a backend and a UI, the backend is credited at half its points once its tests pass, and the other half when the UI is built and checked. The UI halves are credited because their browser checks passed.
 
 ## 9. Remaining 55% (future development scope)
 
