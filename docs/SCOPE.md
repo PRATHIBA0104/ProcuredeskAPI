@@ -186,12 +186,12 @@ Request pipeline: `helmet` -> `cors` -> rate limiter -> JSON parser -> route -> 
 | M3 Vendors UI (list, search/filter/sort/paging, create/edit, detail with contracts, deactivate/reactivate dialogs, role-aware controls) | Complete | Yes: build, ESLint, `tsc`; browser tests against a mock API (list, paging, search, filters, empty states, validation, duplicate name, deactivate guard, edit, viewer role). Real-backend confirmation by the developer |
 | M4 Contracts backend (CRUD, document upload/download, dates and values, status lifecycle, computed expiry and notice deadline) | Complete | Yes: full suite passes on the developer's MongoDB 7.0 (all integration tests plus 110 database-free tests) |
 | M4 Contracts UI (list with effective status, create/edit with date rules, detail with notice-deadline banner, activate/terminate, documents upload/download/delete) | Complete | Yes: build, ESLint, `tsc`; browser tests against a mock API (filters, validation, lifecycle, upload with wrong type, download name, remove, no Edit once terminated). Real-backend confirmation by the developer |
-| M2.1 to M2.3 Dashboard (`GET /dashboard/summary` + UI) | Complete | Partly: 12 database-free tests of the numbers pass, UI browser-tested against a mock; the 5 integration tests in `tests/dashboard.test.js` are **awaiting the developer's `npm test`** |
-| F4 Seed + activity log | Complete | Activity log: yes (used by every write, shown on dashboard). `npm run seed` written and syntax-checked; **awaiting the developer's run** |
+| M2.1 to M2.3 Dashboard (`GET /dashboard/summary` + UI) | Complete | Yes: 12 database-free tests of the numbers pass, the 5 integration tests in `tests/dashboard.test.js` pass on the developer's MongoDB, UI browser-tested against a mock |
+| F4 Seed + activity log | Complete | Activity log: yes (used by every write, shown on dashboard). `npm run seed` run successfully by the developer |
 
 | Effort ledger | Planned EP | Completed and verified EP |
 |---|---|---|
-| Whole project | 100 | 45 (39 verified; 6 awaiting the developer's local run: dashboard integration tests 5, seed 1) |
+| Whole project | 100 | 45 |
 | My individual scope | 45 | 45 (F1 = 2, F2 = 2, F3 = 3, F4 = 1, Auth = 8, Vendors = 10, Contracts = 14, Dashboard = 5) |
 
 **Crediting rule:** each feature's points cover model, API, UI and tests. Where a feature has both a backend and a UI, the backend is credited at half its points once its tests pass, and the other half when the UI is built and checked. The UI halves are credited because their browser checks passed.

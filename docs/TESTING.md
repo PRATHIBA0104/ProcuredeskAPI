@@ -5,13 +5,13 @@
 | Check | Result | Run by / where |
 |---|---|---|
 | Backend integration tests: auth (13), vendors (33), contracts (39) against real MongoDB 7.0 | All passed | Developer's machine (`npm test`) |
-| Backend integration tests: dashboard (5) against real MongoDB | Written; **to be run by the developer** (`npm test`) | pending |
+| Backend integration tests: dashboard (5) against real MongoDB | All passed | Developer's machine (`npm test`) |
 | Backend database-free tests (validation, auth failures, route order, upload rules, contract date logic, dashboard numbers): 122 | All passed | Development sandbox (`npm run test:unit`) |
 | Frontend `next build`, ESLint, TypeScript | Clean | Development sandbox |
 | Browser tests of every screen (Playwright, 15 for sign-in/profile/shell + 43 for dashboard, vendors, contracts, documents, roles) | 58 of 58 passed | Development sandbox, against a **mock API** that copies the real response shapes |
-| `npm run seed` | Written and syntax-checked; **to be run by the developer** | pending |
+| `npm run seed` | Ran successfully | Developer's machine |
 
-Honest note: the sandbox has no MongoDB, so database-backed tests and the seed script were not run there. The browser tests ran against a stand-in API, so the final proof that the real frontend and real backend agree is the manual checklist below.
+Note: the development sandbox has no MongoDB, so database-backed tests and the seed script were run by the developer on a real MongoDB 7.0. The browser tests ran against a stand-in API, so the manual checklist below is the final proof that the real frontend and real backend agree.
 
 ## Database-free unit tests (122)
 

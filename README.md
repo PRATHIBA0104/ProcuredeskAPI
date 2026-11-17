@@ -112,4 +112,4 @@ docs/      SCOPE.md (effort ledger), API.md, DATABASE.md, TESTING.md, CONTRIBUTI
 
 ## 6. More documentation
 
-[docs/SCOPE.md](docs/SCOPE.md) (scope, effort ledger, assumptions) · [docs/API.md](docs/API.md) · [docs/DATABASE.md](docs/DATABASE.md) · [docs/TESTING.md](docs/TESTING.md) · [docs/CONTRIBUTION.md](docs/CONTRIBUTION.md) · [docs/FUTURE_SCOPE.md](docs/FUTURE_SCOPE.md)
+[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) (deploy to Vercel + Render + Atlas) · [docs/postman](docs/postman) (Postman collection: import it, run Login first) · [docs/SCOPE.md](docs/SCOPE.md) (scope, effort ledger, assumptions) · [docs/API.md](docs/API.md) · [docs/DATABASE.md](docs/DATABASE.md) · [docs/TESTING.md](docs/TESTING.md) · [docs/CONTRIBUTION.md](docs/CONTRIBUTION.md) · [docs/FUTURE_SCOPE.md](docs/FUTURE_SCOPE.md)

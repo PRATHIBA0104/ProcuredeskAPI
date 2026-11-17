@@ -9,6 +9,10 @@ const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
 
+// Behind a hosting proxy (Render, Railway, etc.) the client IP arrives in X-Forwarded-For.
+// Set TRUST_PROXY=1 there so rate limiting counts real clients, not the proxy.
+if (process.env.TRUST_PROXY) app.set('trust proxy', Number(process.env.TRUST_PROXY) || 1);
+
 app.use(helmet());
 app.use(
   cors({

@@ -17,8 +17,7 @@ Effort points are weighted by model complexity, number of endpoints, UI complexi
 
 ## Verification status of the 45 EP
 
-* **39 EP verified:** backend auth, vendors and contracts pass their integration tests on a real MongoDB; the app shell, vendors UI and contracts UI pass build, lint, type check and browser tests.
-* **6 EP awaiting the developer's local run:** the dashboard backend (5 integration tests, plus its logic already covered by unit tests) and the seed script (1 EP). Run `npm test` and `npm run seed`.
+All 45 EP are verified: the full backend suite (auth, vendors, contracts, dashboard) passes on a real MongoDB 7.0 and the seed script runs; the app shell, vendors UI, contracts UI and dashboard pass build, lint, type check and browser tests.
 
 ## Notable engineering decisions
 
