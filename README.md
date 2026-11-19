@@ -1,5 +1,11 @@
 # ProcureDesk: B2B Contract Negotiation and Procurement Advisory
 
+## Live demo
+Frontend: https://procuredesk-lyart.vercel.app
+API health check: https://procuredeskapi.onrender.com/api/v1/health
+
+Demo login: admin@demo.procuredesk.in / Demo@12345
+
 A multi-tenant web app for a procurement advisory team to keep an organization's **vendors**, **contracts** and **renewal deadlines** in one place. This repository holds the **first 45% of the full product**: the foundation, authentication, vendor management, contract management (with document upload) and a live dashboard. The remaining 55% is documented in [docs/FUTURE_SCOPE.md](docs/FUTURE_SCOPE.md).
 
 | Layer | Technology |
