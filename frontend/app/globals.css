@@ -4,6 +4,15 @@
 @theme inline {
   --font-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* Landing page headings are set like contract clauses, in a serif that every system already has. */
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+}
+
+/* The one entrance on the landing page: the closing notice window draws in once. */
+@keyframes window-draw {
+  from {
+    transform: scaleX(0);
+  }
 }
 
 :root {

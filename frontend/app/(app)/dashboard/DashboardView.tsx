@@ -32,6 +32,56 @@ function Kpi({ icon, label, value, note, href }: { icon: IconName; label: string
   return href ? <Link href={href}>{body}</Link> : body;
 }
 
+interface GuideStep {
+  title: string;
+  text: string;
+  done: boolean;
+  href: string;
+  action: string;
+}
+
+// A short checklist for a new organization. Each tick comes from real data, so it cannot get out of step.
+function GettingStarted({ steps }: { steps: GuideStep[] }) {
+  const next = steps.findIndex((s) => !s.done);
+  const doneCount = steps.filter((s) => s.done).length;
+  return (
+    <Card>
+      <CardHeader title="Get started" description={`${doneCount} of ${steps.length} done. Add your first records and this page fills in.`} />
+      <ol className="divide-y divide-slate-100">
+        {steps.map((s, i) => (
+          <li key={s.title} className="flex items-start gap-4 px-5 py-4">
+            <span
+              className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${s.done ? "border-teal-700 bg-teal-700 text-white" : "border-slate-300 bg-white"}`}
+              aria-hidden="true"
+            >
+              {s.done && (
+                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 13l4 4L19 7" />
+                </svg>
+              )}
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className={`text-sm font-medium ${s.done ? "text-slate-500 line-through" : "text-slate-900"}`}>
+                {s.title}
+                <span className="sr-only">{s.done ? " (done)" : " (not done yet)"}</span>
+              </p>
+              <p className="mt-0.5 text-sm text-slate-500">{s.text}</p>
+            </div>
+            {!s.done && (
+              <Link
+                href={s.href}
+                className={`shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium ${i === next ? "bg-teal-700 text-white hover:bg-teal-800" : "border border-slate-300 text-slate-700 hover:bg-slate-50"}`}
+              >
+                {s.action}
+              </Link>
+            )}
+          </li>
+        ))}
+      </ol>
+    </Card>
+  );
+}
+
 const STATUS_ORDER: ContractStatus[] = ["active", "expiring", "draft", "expired", "terminated"];
 const STATUS_BAR: Record<ContractStatus, string> = {
   active: "bg-emerald-500",
@@ -46,7 +96,7 @@ function deadlineText(days: number) {
 }
 
 export function DashboardView() {
-  const { user, organization } = useAuth();
+  const { user, organization, canWrite } = useAuth();
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [error, setError] = useState("");
 
@@ -62,6 +112,14 @@ export function DashboardView() {
   }, []);
 
   const totalContracts = summary ? Object.values(summary.statusCounts).reduce((a, b) => a + b, 0) : 0;
+  const guide: GuideStep[] = summary
+    ? [
+        { title: "Create your organization", text: "Done when you registered.", done: true, href: "/dashboard", action: "" },
+        { title: "Add your first vendor", text: "A supplier you buy from, with a category and a contact.", done: summary.kpis.totalVendors > 0, href: "/vendors/new", action: "Add vendor" },
+        { title: "Record a contract", text: "Dates, notice period and value. Attach the signed document if you have it.", done: totalContracts > 0, href: "/contracts/new", action: "Add contract" },
+      ]
+    : [];
+  const showGuide = canWrite && summary !== null && guide.some((g) => !g.done);
   const maxSpend = summary ? Math.max(1, ...summary.spendByCategory.map((s) => s.annualValue)) : 1;
 
   return (
@@ -77,6 +135,7 @@ export function DashboardView() {
 
       {summary && (
         <div className="space-y-6">
+          {showGuide && <GettingStarted steps={guide} />}
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <Kpi icon="building" label="Active vendors" value={summary.kpis.activeVendors} note={`${summary.kpis.totalVendors} vendors in total`} href="/vendors" />
             <Kpi icon="file" label="Contracts in force" value={summary.kpis.activeContracts} note="Active, including those expiring soon" href="/contracts" />

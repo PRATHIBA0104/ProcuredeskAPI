@@ -194,6 +194,8 @@ Request pipeline: `helmet` -> `cors` -> rate limiter -> JSON parser -> route -> 
 | Whole project | 100 | 45 |
 | My individual scope | 45 | 45 (F1 = 2, F2 = 2, F3 = 3, F4 = 1, Auth = 8, Vendors = 10, Contracts = 14, Dashboard = 5) |
 
+**Addition requested by the instructor (not part of the EP count):** customer onboarding landing page at `/` plus an in-app first-run "Get started" checklist on the dashboard. Verified with 15 browser checks against a mock API (content, anchors, FAQ, mobile width with no sideways scroll, signed-in header, checklist ticking from real data).
+
 **Crediting rule:** each feature's points cover model, API, UI and tests. Where a feature has both a backend and a UI, the backend is credited at half its points once its tests pass, and the other half when the UI is built and checked. The UI halves are credited because their browser checks passed.
 
 ## 9. Remaining 55% (future development scope)

@@ -1,11 +1,5 @@
 # ProcureDesk: B2B Contract Negotiation and Procurement Advisory
 
-## Live demo
-Frontend: https://procuredesk-lyart.vercel.app
-API health check: https://procuredeskapi.onrender.com/api/v1/health
-
-Demo login: admin@demo.procuredesk.in / Demo@12345
-
 A multi-tenant web app for a procurement advisory team to keep an organization's **vendors**, **contracts** and **renewal deadlines** in one place. This repository holds the **first 45% of the full product**: the foundation, authentication, vendor management, contract management (with document upload) and a live dashboard. The remaining 55% is documented in [docs/FUTURE_SCOPE.md](docs/FUTURE_SCOPE.md).
 
 | Layer | Technology |
@@ -70,6 +64,8 @@ npm run test:unit # only the tests that need no database
 Run `npm test` on its own, not together with another `jest` command: the suites share one test database.
 
 ## 2. What the app does (feature tour)
+
+The home page (`/`) is a public customer onboarding landing page: what the product does, the path from sign-up to a first renewal alert, what you need to have ready, who can do what, and an FAQ. After registering, an empty dashboard shows a "Get started" checklist whose ticks come from your real data (vendors and contracts), and which disappears once all steps are done or for read-only users.
 
 Follow this order the first time; each step shows one feature.
 
