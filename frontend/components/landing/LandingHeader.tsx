@@ -44,7 +44,7 @@ export function LandingHeader() {
                 Sign in
               </Link>
               <Link href="/register" className="inline-flex h-10 items-center whitespace-nowrap rounded-lg bg-teal-700 px-3 sm:px-4 text-sm font-medium text-white hover:bg-teal-800">
-                Create account
+                Get started
               </Link>
             </>
           )}
